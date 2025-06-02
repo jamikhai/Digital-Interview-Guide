@@ -1,0 +1,155 @@
+\subsection*{From Harris \& Harris Textbook: ``Computer Architecture \& Digital Design''}
+
+\subsubsection*{Combinational Logic}
+\begin{enumerate}
+    \item Draw a two-input XOR gate using only NAND gates. What is the minimum number of gates required? \\
+    \item Design a circuit that determines whether a month has 31 days based on a 4-bit input.
+    \item What is a tristate buffer? Explain its function and typical use cases.
+    \item Why are NAND gates considered universal? Justify your answer.
+    \item Why can a circuit's contamination delay be shorter than its propagation delay?
+\end{enumerate}
+
+\subsubsection*{Sequential Logic}
+\begin{enumerate}
+    \item Create an FSM that detects the input sequence 1010. \\
+    \item Design a serial FSM that performs two’s complement bit-by-bit.
+    \item What is the difference between a latch and a flip-flop? When should each be used?
+    \item Design an FSM that functions as a 5-bit counter.
+    \item Implement an edge detector that outputs HIGH on a rising edge (0 to 1 transition).
+    \item What is pipelining, and why is it useful in digital systems?
+    \item Define negative hold time in the context of flip-flops.
+\end{enumerate}
+
+\subsubsection*{Timing and Metastability}
+\begin{enumerate}
+    \item Explain timing constraints for logic between two registers.
+    \item If a buffer is added to the clock input of the second flip-flop, how does that affect the setup time requirement?
+    \item What is metastability, and how do synchronizers mitigate its effects?
+\end{enumerate}
+
+\subsubsection*{Verilog/SystemVerilog}
+\begin{enumerate}
+    \item What is the difference between blocking and non-blocking assignments in Verilog?
+    \item When should you use \texttt{always\_comb} vs. \texttt{always\_ff}?
+    \item How do you write a clean and efficient testbench in SystemVerilog?
+    \item Compare \texttt{case} statements with \texttt{if-else} constructs in Verilog.
+    \item How do you define parameterized modules in Verilog?
+\end{enumerate}
+
+\subsubsection*{Microarchitecture \& FPGA Design}
+\begin{enumerate}
+    \item What are pipeline hazards, and how can they be resolved?
+    \item Why don't modern CPUs use extremely deep pipelines (e.g., 100 stages)?
+    \item Compare cache organizations: direct-mapped, set-associative, and fully-associative.
+    \item What are the key differences in design approach between FPGAs and ASICs?
+    \item Discuss the trade-offs involved in implementing FSMs on an FPGA.
+\end{enumerate}
+
+\subsubsection*{Miscellaneous Digital Design Topics}
+\begin{enumerate}
+    \item Compare clock gating and power gating. When is each used?
+    \item How does clock skew impact setup and hold timing?
+    \item What is the difference between synchronous and asynchronous resets?
+    \item How can multiplication be implemented efficiently in digital circuits?
+    \item What is the maximum possible result from multiplying two N-bit numbers?
+\end{enumerate}
+
+\subsection*{Interview Questions I Was Asked (Various Companies)}
+
+\subsection*{Signal Processing}
+\begin{enumerate}
+    \item How is an analog signal converted to digital? (Cover discretization and quantization)
+    \item What are sampling and aliasing, both in the time and frequency domains?
+    \item How many bits are needed to represent a signal with N distinct values? (e.g., $\log_2(N)$)
+    \item Compare FIR and IIR filters: benefits, limitations, and their phase characteristics.
+\end{enumerate}
+
+\subsection*{Digital Design}
+\begin{enumerate}
+    \item How can you build an OR gate using only NAND gates?
+    \item How do you construct a 2x1 multiplexer using basic gates?
+    \item Write the truth tables for JK and D flip-flops.
+    \item Design a D flip-flop using a JK flip-flop.
+    \item Design a 2-bit counter using JK flip-flops (use LSB as the clock for MSB).
+    \item What are setup time and hold time in sequential circuits?
+    \item \textbf{Bonus:} How do you derive the transfer function of an IIR filter?
+\end{enumerate}
+
+\subsection*{Verilog}
+\begin{enumerate}
+    \item What is the difference between synchronous and asynchronous resets? Provide Verilog examples.
+    \item How do you swap two variables in Verilog with and without a temporary register?
+    \item Compare blocking and non-blocking assignments in Verilog.
+    \item What distinguishes a latch from a flip-flop?
+    \item Which types of Verilog code will infer a latch, and why?
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.6\linewidth]{images/latch-inference.jpg}
+            \caption{Latch Inference in Verilog.}
+        \end{figure}
+    \item Describe the differences between \texttt{case}, \texttt{casez}, and \texttt{casex}.
+    \item Determine the output of the following \texttt{casez} and \texttt{casex} statements:
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.6\linewidth]{images/case-statements.jpg}
+            \caption{Verilog Case Statements.}
+        \end{figure}
+    \item What is a glitch in digital circuits?
+    \item How would you eliminate the glitch shown in this waveform and code?
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.6\linewidth]{images/glitch-waveform.png}
+            \caption{Glitch Waveform Example.}
+        \end{figure}
+    \item Write Verilog for a circuit with three input gates, three D flip-flops, and a single output gate:
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.6\linewidth]{images/circuit-diagram.jpg}
+            \caption{Circuit Diagram for Verilog Module.}
+        \end{figure}
+    \item Design an FSM that detects the sequence “011” and write the Verilog code.
+    \item What is the difference between inter-delay and intra-delay statements?
+    \item Given the code and delays below, what are the resulting logic outputs?
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.6\linewidth]{images/delay-statements.png}
+            \caption{Verilog Delay Statements.}
+        \end{figure}
+\end{enumerate}
+
+\subsection*{Digital/Physical}
+\begin{enumerate}
+    \item Identify and explain timing violations in the following waveform:
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.6\linewidth]{images/timing-waveform.png}
+            \caption{Timing Violation Waveform.}
+        \end{figure}
+    \item Using given setup times, calculate the minimum viable clock period:
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.6\linewidth]{images/timing-calculation.jpg}
+            \caption{Timing Calculation Example.}
+        \end{figure}
+    \item Describe the design handoff from Verilog to floorplanning (e.g., 45nm project).
+    \item How were power (VDD) and ground (GND) nets routed in your project?
+    \item Explain the process and goals of clock tree synthesis.
+    \item What makes clock lines unique in digital layouts?
+    \item What are the typical challenges during place and route/layout?
+    \item What file types (e.g., SDC) were used in your flow?
+    \item Which static timing analysis tool was used to close timing?
+\end{enumerate}
+
+\subsection*{Miscellaneous}
+\begin{enumerate}
+    \item Describe how an FPGA functions.
+    \item What is a Look-Up Table (LUT) in the context of FPGAs?
+    \item Recall key topics from computer architecture (e.g., jump, branch, C-level mappings).
+    \item What is a Phase-Locked Loop (PLL)?
+    \item Define clock jitter and its impact on performance.
+    \item Review sampling and aliasing — what issues can arise?
+    \item What are the Fourier and Laplace transforms used for?
+    \item Walk through a typical ASIC design flow and project life cycle.
+    \item What is the difference between DRC and LVS checks?
+    \item What are DACs and ADCs, and how are they applied in systems?
+\end{enumerate}
