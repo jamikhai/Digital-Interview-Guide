@@ -1,68 +1,433 @@
-% Set student and course information
-\newcommand{\firstname}{Justin}
-\newcommand{\lastname}{Mikhail}
-\newcommand{\ccid}{}
-\newcommand{\ssid}{}
-\newcommand{\assignment}{University of Alberta}
-\newcommand{\coursecode}{Digital/FPGA/ASIC Hardware Design Interview Questions}
+% ============================
+% Digital/FPGA/ASIC Hardware Design Interview Guide
+% ============================
 
-% Define page type and font size
-\documentclass[a4paper, 12pt, twoside]{article}
-
-% Include packages
-\usepackage[hmargin=0.5in, vmargin=0.75in]{geometry}
-\usepackage{fancyhdr}
-\usepackage[utf8]{inputenc}
+\documentclass[11pt]{article}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{amsmath}
 \usepackage{listings}
 \usepackage{xcolor}
-\usepackage{titlesec}
-\usepackage{graphicx}
-\usepackage{float}
+\usepackage{cite}
+\usepackage[margin=0.5in]{geometry}
+\bibliographystyle{ieeetr}
 
-% Set page header information
-\lhead{\ccid \\ \ssid}
-\chead{\coursecode \\ \assignment}
-\rhead{\lastname, \firstname \\ 2025}
-
-% Set page header style
-\thispagestyle{fancy}
-\setlength{\parindent}{0pt}
-\setlength{\headheight}{32pt}
-\setlength{\headsep}{24pt}
-
-% Remove insane spacing between sections and subsections
-% \titlespacing{\section}{0pt}{5pt}{2pt}
-% \titlespacing{\subsection}{0pt}{5pt}{2pt}
-
-% Define MATLAB settings for listings
-% Example usage of the listing style
-% \lstinputlisting[language=matlab, style=code]{q1.m}
-% or
-% \begin{lstlisting}[language=matlab, style=code]
-%   code goes here
-% \end{lstlisting}
-\lstdefinestyle{code}
-{
+\lstdefinestyle{verilog}{
     backgroundcolor=\color{gray!5},
-    basicstyle=\ttfamily\small,                   % Code font and size
-    commentstyle=\color{green!60!black},          % Comments in green
-    stringstyle=\color{orange},                   % Strings in orange
-    keywordstyle=\color{blue},                    % Keywords in blue
-    numberstyle=\ttfamily\scriptsize\color{gray}, % Style for line numbers
-    numbers=left,                                 % Enable line numbers on the left
-    numbersep=1.5em,                              % Space between line numbers and code
-    xleftmargin=0.5in,
-    xrightmargin=0.5in,
-    framexleftmargin=1.75em,                      % Add margin inside the frame for numbers
-    framexrightmargin=0.5em,                      % Optional: Adjust right margin
-    frameshape={RYR}{Y}{Y}{RYR},                  % Set the frame shape to have rounded corners
-    tabsize=2,
-    breaklines=true,                              % Enable line wrapping
+    language=Verilog,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\bfseries\color{blue},
+    commentstyle=\itshape\color{gray},
+    stringstyle=\color{orange},
     showstringspaces=false,
-    captionpos=b
+    numbers=left,
+    numberstyle=\tiny,
+    frame=single,
+    breaklines=true
 }
 
-% Set page content
+
+
 \begin{document}
-\include{content.tex}
+
+%=============================
+% 1. Title and Introduction
+%=============================
+\title{Digital/FPGA/ASIC Hardware Design Interview Guide}
+\author{Justin Mikhail\\University of Alberta, 2025\\BSc. Computer Engineering, Spec. in Nanoscale System Design}
+\date{}
+\maketitle
+
+\section*{Purpose}
+This guide has been created to help you prepare for digital hardware interviews
+(ASIC/FPGA) at a level expected from a recent graduate of a Computer
+Engineering undergraduate program. It covers combinational/sequential logic,
+HDL (Verilog/SystemVerilog), microarchitecture, timing analysis, and more. This
+resource is purely for educational and learning purposes. Some questions adapted from
+Harris \& Harris \cite{Harris2021}.
+
+%=============================
+% 2. Preparation Insights
+%=============================
+\section{Preparation Insights}
+\begin{itemize}
+    \item \textbf{Know Your Resume:} Be prepared to discuss everything
+    listed—projects, tools, and responsibilities—at both high and detailed
+    levels, including drawing a block diagram of your project while talking
+    through it.
+
+    \item \textbf{Cross-Functional Readiness:} Expect comprehensive questions
+    that may span verification, design, and software/firmware interaction.
+    Interviewers often assess system-level understanding beyond RTL and
+    understanding of good design practices.
+
+    \item \textbf{Problem Solving Focus:} Interviewers value your approach and
+    reasoning more than just getting the right answer. Communicate your thought
+    process clearly and consider trade-offs. Practice explaining your thought
+    process during problems, and don't be afraid to ask for a moment to think
+    or to confirm assumptions. This demonstrates critical thinking and ensures
+    you fully understand the problem before solving it.
+
+    \item \textbf{Master the Fundamentals:} Ensure a strong understanding of
+    core digital design concepts such as pipelining, FSMs, combinational and
+    sequential logic, and memory addressing. Often an interviewer will ask you
+    to explain a concept before you do a design exercise.
+
+    \item \textbf{PPA and Timing} Be ready to discuss Power-Performance-Area
+    (PPA) tradeoffs, Clock Domain Crossing (CDC), FIFO design, and low-power
+    strategies (e.g., clock gating, power gating). Be well-versed in setup and
+    hold times, clock skew, on-chip variations, power consumption,
+    metastability, and timing paths. Once again, relate thought processes and
+    design choices to Power, Performance, and Area.
+
+    \item \textbf{RTL Design Topics:} Practice implementing sequence detectors,
+    understand the difference between Mealy and Moore machines, and be able to
+    write clear, synthesizable RTL. Know that an RTL testbench is just as
+    important as the module itself. Understanding the simulation tool and
+    reading waveforms is essential.
+
+    \item \textbf{Leverage Your Experience:} Be able to explain your past
+    roles, design challenges, and key decisions. Reflect on what you learned
+    and how you grew from those experiences. Show humility and a willingness to
+    learn from mistakes. Do your best to be charismatic and personable, as
+    interviewers are also evaluating if they want to work with you.
+
+    \item \textbf{Don't Rely on AI:} Study for interviews as you would for an
+    exam, as you will not have access to AI tools during the interview. While
+    AI can be a helpful tool for learning, it should not replace your own
+    understanding and problem-solving skills.
+\end{itemize}
+
+%=============================
+% 3. Digital Design Fundamentals
+%=============================
+\section{Digital Design Fundamentals}
+
+\subsection{Combinational Logic}
+\begin{enumerate}
+    \item How can you build an OR gate using only NAND gates? Show the Boolean
+    algebra and the circuit diagram.
+    \item Draw a two-input XOR gate using only NAND gates. What is the
+    minimum number of gates required?
+    \item What is the difference between a combinational and a sequential
+    circuit?
+    \item What is a tristate buffer? How and why is it used?
+    \item Are NAND gates universal? Why?
+    \item Design a circuit that determines whether a month has 31 days based on
+    a 4-bit input representing the month (1-12). Use a truth table and K-map.
+    \item What is the difference between a multiplexer and a demultiplexer?
+    \item What is the boolean equation of a multiplexer?
+    \item Explain the concept of fan-out in combinational circuits. How does it
+    impact circuit design?
+    \item What is the significance of propagation delay in combinational
+    circuits? How can it be minimized?
+    \item Design a priority encoder for a 4-bit input. Explain its functionality.
+\end{enumerate}
+
+\subsection{Sequential Logic}
+\begin{enumerate}
+    \item What is setup time and hold time?
+    \item What determines the maximum clock frequency? How could you change a
+    circuit if the clock frequency needed to be increased?
+    \item Explain the difference between a Mealy and a Moore state machine.
+    Which has more states? Which may be more prone to glitches?
+    \item What is pipelining, and why is it useful in digital systems?
+    \item Design a D flip-flop using a JK flip-flop.
+    \item Design a 2-bit counter using JK flip-flops.
+    \item Create an FSM that detects the input sequence \texttt{10X1}. (X = Don't Care)
+    \item Design an edge detector circuit that outputs HIGH on a rising edge (0 to 1
+    transition).
+    \item What is metastability in flip-flops, and how can it be mitigated?
+    \item Explain the concept of clock domain crossing and why it is important.
+    What are 3 common methods to handle it?
+    \item Draw a state transition diagram for a 10110 sequence detector, with
+    and without detection overlap.
+\end{enumerate}
+
+%=============================
+% 4. Verilog / SystemVerilog
+%=============================
+\section{Verilog / SystemVerilog}
+
+\subsection{Language Basics}
+\begin{enumerate}
+    \item What is the difference between synchronous and asynchronous resets?
+    Provide Verilog examples.
+
+    \item When should \texttt{always\_comb} be used instead of
+    \texttt{always\_ff} in SystemVerilog?
+
+    \item Compare blocking (\verb|=|) and non-blocking (\verb|<=|) assignments
+    in Verilog. When should each be used?
+
+    \item Below are two Verilog snippets. Identify the issues in each causing a
+    latch to be inferred.
+    \lstinputlisting[style=verilog]{examples/latch_inference.v}
+
+    % Placeholder for Figure 1
+    % \begin{figure}[H]
+    %     \centering
+    %     \includegraphics[width=0.6\linewidth]{images/latch-inference.jpg}
+    %     \caption{Latch Inference in Verilog.}
+    %     \label{fig:latch_inference}
+    % \end{figure}
+    \item Describe the differences between \texttt{case}, \texttt{casez}, and
+    \texttt{casex}.
+
+    \item Given the code and delays below, what are the logic
+    values of the signals at t = 5?
+    \lstinputlisting[style=verilog]{examples/delay_statements_tb.v}
+
+    % \begin{figure}[H]
+    %     \centering
+    %     \includegraphics[width=0.6\linewidth]{images/delay-statements.png}
+    %     \caption{Verilog Delay Statements.}
+    %     \label{fig:delay_statements}
+    % \end{figure}
+
+
+    \item What is a glitch in digital circuits, and how would you eliminate the
+    glitch shown in this waveform/code?
+    \lstinputlisting[style=verilog]{examples/glitch_code.v}
+    \lstinputlisting[style=verilog]{examples/glitch_code_tb.v}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.7\linewidth]{images/glitch-waveform-drawn.png}
+        \caption{Glitch Waveform Example.}
+        \label{fig:glitch_waveform}
+    \end{figure}
+
+    \item Write a Verilog module for the following circuit given in the diagram
+    by first writing a module for a D-flip flop and using 3 instances of it in
+    the design. Bonus: Write a testbench for the module.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\linewidth]{images/circuit-diagram-drawio.jpg}
+        \caption{Circuit Diagram for Verilog Module.}
+        \label{fig:verilog_circuit}
+    \end{figure}
+    \item Design an FSM that detects the sequence “011” and write the Verilog
+    code. Draw the state (transition) diagram before writing any code.
+    \item How do you swap two variables in Verilog with and without a temporary
+    register? Provide a Verilog example for each.
+    \item How do you define parameterized modules in Verilog? Provide an
+    example of a parameterized adder module.
+    \item What is the purpose of the \texttt{generate} statement in SystemVerilog?
+    \item How does if-else differ from case statements in SystemVerilog? When would you
+    use one over the other? How may they differ in terms of synthesis?
+    \item What is transport vs inertial delay in Verilog?
+\end{enumerate}
+
+\subsection{Testbenches \& Verification}
+\begin{enumerate}
+    \item How do you write a clean and efficient testbench in SystemVerilog?
+    \item What is the impact of delay statements on simulation vs.\ synthesis?
+    \item What is the difference between inter-delay and intra-delay
+    statements?
+    \item How do you write a testbench for a module that includes clock and
+    reset signals? Provide a simple example.
+    \item What is the purpose of assertions in SystemVerilog, and how do you
+    use them in testbenches?
+\end{enumerate}
+
+%=============================
+% 5. Signal Processing \& DSP
+%=============================
+\section{Signal Processing \& DSP}
+\begin{enumerate}
+    \item What is sampling in the context of digital signal processing?
+    \item What is the Nyquist theorem, and how does it relate to sampling?
+    \item How is an analog signal converted to digital?
+    \item Explain the affects of aliasing in both time and frequency domains.
+    \item How many bits are needed to represent a signal with \(N\) distinct
+    values?
+    \item Compare FIR and IIR filters. What are the benefits, limitations, and
+    phase characteristics?
+    \item How do you derive the transfer function of an IIR filter given a
+    schematic/diagram?
+    \item What is the difference between a low-pass and high-pass filter?
+\end{enumerate}
+
+%=============================
+% 6. Timing \& Metastability
+%=============================
+\section{Timing}
+\begin{enumerate}
+    \item Explain why a circuit's contamination delay might be less than its
+    propagation delay.
+
+    \item Identify and explain potential timing violations in the following waveform.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\linewidth]{images/timing-waveform.png}
+        \caption{Timing Waveform.}
+        \label{fig:timing_violation}
+    \end{figure}
+    \item Using the given timing values, calculate the minimum viable clock period.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\linewidth]{images/timing-calculation.jpg}
+        \caption{Timing Calculation Example.}
+        \label{fig:timing_calc}
+    \end{figure}
+    \item Explain timing constraints for logic between two registers.
+    \item What are the equations for setup and hold time? Explain the variables and meanings.
+    \item If a buffer is added to the clock input of the second flip-flop, how
+    does that affect setup time requirements?
+    \item What is metastability, and how do synchronizers mitigate its effects?
+    \item What is clock skew, and how does it impact setup and hold timing?
+    \item Define clock jitter and its impact on performance.
+    \item What is a Phase-Locked Loop (PLL)?
+\end{enumerate}
+
+%=============================
+% 7. Physical Design \& FPGA/ASIC Flow
+%=============================
+\section{Physical Design \& FPGA/ASIC Flow}
+\begin{enumerate}
+    \item Describe the design handoff from Verilog down to floorplanning.
+    \item How did you simulate your design? What tools did you use?
+    \item How may power (VDD) and ground (GND) nets be typically routed on a chip?
+    \item Explain the process and goals of clock tree synthesis. What considerations should be made for clock
+    routing?
+    \item What are the some challenges during place and route/layout?
+    \item What is timing closure? Have you used a static timing analysis tool?
+    \item Describe how an FPGA functions, and specifically, what is a Look-Up
+    Table (LUT)?
+    \item Walk through a typical ASIC design flow and project life cycle.
+    \item What is the difference between DRC and LVS checks?
+    \item What are the advantages and disadvantages of using low-voltage transistors (LVT) in ASIC design? Relate your answer to PPA (Power, Performance, Area) trade-offs.
+    \item What are the affects of changing drive strength of a transistor in an ASIC design? How does it affect PPA?
+    \item What are static and dynamic power? How can you reduce each in an ASIC design?
+\end{enumerate}
+
+%=============================
+% 8. Miscellaneous \& Advanced Topics
+%=============================
+\section{Architecture \& Miscellaneous}
+\begin{enumerate}
+    \item What is an ALU?
+
+    \item What is a stack data structure? What is queue data structure?
+
+    \item What is a FIFO buffer? How is the depth determined? What happens if
+    the write frequency is greater than the read frequency?
+
+    \item What is heap memory, and how does it differ from stack memory?
+
+    \item How is C code eventually ran by a CPU? Describe the process from C code to machine code.
+
+    \item What is a program counter, and how does it work in a CPU? How do jump or branch instructions affect it?
+
+    \item How do you reverse a linked list in C?
+
+    \item Compare clock gating and power gating. When is each used?
+
+    \item How can multiplication be implemented efficiently in digital
+    circuits?
+
+    \item What is the maximum possible result from multiplying two \(N\)-bit
+    numbers?
+
+    \item Compare cache organizations: direct-mapped, set-associative, and
+    fully-associative.
+
+    \item What are pipeline hazards, and how can they be resolved? Why don't
+    modern CPUs use extremely deep pipelines (e.g., 100 stages)?
+
+    \item Discuss the trade-offs involved in different implementations of FSM encodings on an FPGA such as
+    one-hot, binary, and gray code.
+
+    \item What are DACs and ADCs, and how are they applied in systems?
+
+    \item What is the meaning of a resolution of a DAC or ADC?
+
+    \item What is SPI and what signals are needed to implement it?
+
+    \item What is I2C and what signals are needed to implement it?
+
+    \item What is UART and what signals are needed to implement it?
+\end{enumerate}
+
+%=============================
+% 9. \textit{“From Harris \& Harris Textbook”} (Optional Section)
+%=============================
+% \section{From Harris \& Harris, \emph{Computer Architecture \& Digital Design} textbook}
+% \noindent\textit{(These questions are adapted from end of chapter "Interview Questions" of Harris \&
+% Harris.) \cite{Harris2021}}
+
+% \begin{enumerate}
+%     \item \textbf{Combinational Logic}
+%     \begin{enumerate}
+%         \item Draw a two-input XOR gate using only NAND gates. What is the
+%         minimum number of gates required?
+%         \item Design a circuit that determines whether a month has 31 days
+%         based on a 4-bit input.
+%         \item What is a tristate buffer? Explain its function and typical use
+%         cases.
+%         \item Why are NAND gates considered universal? Justify your answer.
+%         \item Why can a circuit's contamination delay be shorter than its
+%         propagation delay?
+%     \end{enumerate}
+%     \item \textbf{Sequential Logic}
+%     \begin{enumerate}
+%         \item Create an FSM that detects the input sequence \texttt{1010}.
+%         \item What is the difference between a latch and a flip-flop? When
+%         should each be used?
+%         \item Design an FSM that functions as a 5-bit counter.
+%         \item Implement an edge detector that outputs HIGH on a rising edge (0
+%         to 1).
+%         \item What is pipelining, and why is it useful in digital systems?
+%         \item Define negative hold time in the context of flip-flops.
+%     \end{enumerate}
+%     \item \textbf{Timing \& Metastability}
+%     \begin{enumerate}
+%         \item Explain timing constraints for logic between two registers.
+%         \item If a buffer is added to the clock input of the second flip-flop,
+%         how does that affect setup requirements?
+%         \item What is metastability, and how do synchronizers mitigate its
+%         effects?
+%     \end{enumerate}
+%     \item \textbf{Verilog/SystemVerilog}
+%     \begin{enumerate}
+%         \item What is the difference between blocking and non-blocking
+%         assignments?
+%         \item When should you use \texttt{always\_comb} vs.\
+%         \texttt{always\_ff}?
+%         \item How do you write a clean and efficient testbench in
+%         SystemVerilog?
+%         \item Compare \texttt{case} statements with \texttt{if-else}
+%         constructs.
+%         \item How do you define parameterized modules?
+%     \end{enumerate}
+%     \item \textbf{Microarchitecture \& FPGA Design}
+%     \begin{enumerate}
+%         \item What are pipeline hazards, and how can they be resolved?
+%         \item Why don't modern CPUs use extremely deep pipelines (e.g., 100
+%         stages)?
+%         \item Compare cache organizations: direct-mapped, set-associative,
+%         fully-associative.
+%         \item What are the key differences in design approach between FPGAs and
+%         ASICs?
+%         \item Discuss trade-offs involved in implementing FSMs on an FPGA.
+%     \end{enumerate}
+%     \item \textbf{Miscellaneous Digital Design Topics}
+%     \begin{enumerate}
+%         \item Compare clock gating and power gating. When is each used?
+%         \item How does clock skew impact setup and hold timing?
+%         \item What is the difference between synchronous and asynchronous
+%         resets?
+%         \item How can multiplication be implemented efficiently in digital
+%         circuits?
+%         \item What is the maximum possible result from multiplying two
+%         \(N\)-bit numbers?
+%     \end{enumerate}
+% \end{enumerate}
+
+%=============================
+% 10. References
+%=============================
+\bibliography{References}
+
 \end{document}
