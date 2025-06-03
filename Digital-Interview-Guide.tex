@@ -1,6 +1,4 @@
-% ============================
 % Digital/FPGA/ASIC Hardware Design Interview Guide
-% ============================
 
 \documentclass[11pt]{article}
 \usepackage{float}
@@ -27,11 +25,10 @@
 }
 
 
-
 \begin{document}
 
 %=============================
-% 1. Title and Introduction
+% Title and Introduction
 %=============================
 \title{Digital/FPGA/ASIC Hardware Design Interview Guide}
 \author{Justin Mikhail\\University of Alberta, 2025\\BSc. Computer Engineering, Spec. in Nanoscale System Design}
@@ -47,7 +44,7 @@ resource is purely for educational and learning purposes. Some questions adapted
 Harris \& Harris \cite{Harris2021}.
 
 %=============================
-% 2. Preparation Insights
+% Preparation Insights
 %=============================
 \section{Preparation Insights}
 \begin{itemize}
@@ -99,7 +96,7 @@ Harris \& Harris \cite{Harris2021}.
 \end{itemize}
 
 %=============================
-% 3. Digital Design Fundamentals
+% Digital Design Fundamentals
 %=============================
 \section{Digital Design Fundamentals}
 
@@ -145,12 +142,14 @@ Harris \& Harris \cite{Harris2021}.
 \end{enumerate}
 
 %=============================
-% 4. Verilog / SystemVerilog
+% Verilog / SystemVerilog
 %=============================
 \section{Verilog / SystemVerilog}
 
 \subsection{Language Basics}
 \begin{enumerate}
+    \item How does Verilog differ from VHDL?
+
     \item What is the difference between synchronous and asynchronous resets?
     Provide Verilog examples.
 
@@ -159,6 +158,20 @@ Harris \& Harris \cite{Harris2021}.
 
     \item Compare blocking (\verb|=|) and non-blocking (\verb|<=|) assignments
     in Verilog. When should each be used?
+
+    \item Design an FSM that detects the sequence “011” and write the Verilog
+    code. Draw the state (transition) diagram before writing any code. Bonus:
+    Compare both Mealy and Moore module implementations.
+    \item How do you swap two variables in Verilog with and without a temporary
+    register? Provide a Verilog example for each.
+    \item How do you define parameterized modules in Verilog? Provide an
+    example of a parameterized adder module.
+    \item What is the purpose of the \texttt{generate} statement in SystemVerilog?
+    \item How does if-else differ from case statements in SystemVerilog? When would you
+    use one over the other? How may they differ in terms of synthesis?
+    \item What is transport vs inertial delay in Verilog?
+    \item What is the purpose of the \texttt{initial} block in Verilog? How does it differ from the
+    \texttt{always} block?
 
     \item Below are two Verilog snippets. Identify the issues in each causing a
     latch to be inferred.
@@ -187,7 +200,7 @@ Harris \& Harris \cite{Harris2021}.
 
 
     \item What is a glitch in digital circuits, and how would you eliminate the
-    glitch shown in this waveform/code?
+    glitch shown in this waveform by changing the code?
     \lstinputlisting[style=verilog]{examples/glitch_code.v}
     \lstinputlisting[style=verilog]{examples/glitch_code_tb.v}
 
@@ -207,24 +220,18 @@ Harris \& Harris \cite{Harris2021}.
         \caption{Circuit Diagram for Verilog Module.}
         \label{fig:verilog_circuit}
     \end{figure}
-    \item Design an FSM that detects the sequence “011” and write the Verilog
-    code. Draw the state (transition) diagram before writing any code.
-    \item How do you swap two variables in Verilog with and without a temporary
-    register? Provide a Verilog example for each.
-    \item How do you define parameterized modules in Verilog? Provide an
-    example of a parameterized adder module.
-    \item What is the purpose of the \texttt{generate} statement in SystemVerilog?
-    \item How does if-else differ from case statements in SystemVerilog? When would you
-    use one over the other? How may they differ in terms of synthesis?
-    \item What is transport vs inertial delay in Verilog?
+
+    \item Write a Verilog module to infer a Block RAM (BRAM) in synthesis with different read and write
+    ports and different clock frequencies. Include a testbench that demonstrates reading and writing to the BRAM.
+    Bonus: Paramterize the BRAM depth and width.
 \end{enumerate}
 
 \subsection{Testbenches \& Verification}
 \begin{enumerate}
-    \item How do you write a clean and efficient testbench in SystemVerilog?
+    \item What is the goal of a good testbench in RTL?
     \item What is the impact of delay statements on simulation vs.\ synthesis?
     \item What is the difference between inter-delay and intra-delay
-    statements?
+    statements in Verilog?
     \item How do you write a testbench for a module that includes clock and
     reset signals? Provide a simple example.
     \item What is the purpose of assertions in SystemVerilog, and how do you
@@ -232,7 +239,7 @@ Harris \& Harris \cite{Harris2021}.
 \end{enumerate}
 
 %=============================
-% 5. Signal Processing \& DSP
+% Signal Processing \& DSP
 %=============================
 \section{Signal Processing \& DSP}
 \begin{enumerate}
@@ -250,7 +257,7 @@ Harris \& Harris \cite{Harris2021}.
 \end{enumerate}
 
 %=============================
-% 6. Timing \& Metastability
+% Timing \& Metastability
 %=============================
 \section{Timing}
 \begin{enumerate}
@@ -275,6 +282,8 @@ Harris \& Harris \cite{Harris2021}.
     \item What are the equations for setup and hold time? Explain the variables and meanings.
     \item If a buffer is added to the clock input of the second flip-flop, how
     does that affect setup time requirements?
+    \item List a few ways to fix a setup time violation.
+    \item List a few ways to fix a hold time violation.
     \item What is metastability, and how do synchronizers mitigate its effects?
     \item What is clock skew, and how does it impact setup and hold timing?
     \item Define clock jitter and its impact on performance.
@@ -282,7 +291,7 @@ Harris \& Harris \cite{Harris2021}.
 \end{enumerate}
 
 %=============================
-% 7. Physical Design \& FPGA/ASIC Flow
+% Physical Design \& FPGA/ASIC Flow
 %=============================
 \section{Physical Design \& FPGA/ASIC Flow}
 \begin{enumerate}
@@ -295,15 +304,16 @@ Harris \& Harris \cite{Harris2021}.
     \item What is timing closure? Have you used a static timing analysis tool?
     \item Describe how an FPGA functions, and specifically, what is a Look-Up
     Table (LUT)?
+    \item What is a constraints file in the context of FPGA design?
     \item Walk through a typical ASIC design flow and project life cycle.
     \item What is the difference between DRC and LVS checks?
     \item What are the advantages and disadvantages of using low-voltage transistors (LVT) in ASIC design? Relate your answer to PPA (Power, Performance, Area) trade-offs.
     \item What are the affects of changing drive strength of a transistor in an ASIC design? How does it affect PPA?
-    \item What are static and dynamic power? How can you reduce each in an ASIC design?
+    \item What are static and dynamic power? How can you reduce each in an ASIC design? What is the equation for dynamic power?
 \end{enumerate}
 
 %=============================
-% 8. Miscellaneous \& Advanced Topics
+% Miscellaneous \& Advanced Topics
 %=============================
 \section{Architecture \& Miscellaneous}
 \begin{enumerate}
@@ -316,11 +326,15 @@ Harris \& Harris \cite{Harris2021}.
 
     \item What is heap memory, and how does it differ from stack memory?
 
+    \item What is a smart pointer in C?
+
     \item How is C code eventually ran by a CPU? Describe the process from C code to machine code.
 
     \item What is a program counter, and how does it work in a CPU? How do jump or branch instructions affect it?
 
     \item How do you reverse a linked list in C?
+
+    \item What is spatial and temporal locality in the context of cache memory?
 
     \item Compare clock gating and power gating. When is each used?
 
@@ -338,6 +352,8 @@ Harris \& Harris \cite{Harris2021}.
 
     \item Discuss the trade-offs involved in different implementations of FSM encodings on an FPGA such as
     one-hot, binary, and gray code.
+
+    \item What is a JTAG interface, and how is it used in hardware debugging?
 
     \item What are DACs and ADCs, and how are they applied in systems?
 
