@@ -7,6 +7,7 @@
 \usepackage{listings}
 \usepackage{xcolor}
 \usepackage{cite}
+\usepackage{hyperref}
 \usepackage[margin=0.5in]{geometry}
 \bibliographystyle{ieeetr}
 
@@ -31,9 +32,15 @@
 This guide has been created to help you prepare for digital hardware interviews
 (ASIC/FPGA) at a level expected from a recent graduate of a Computer
 Engineering undergraduate program. It covers combinational/sequential logic,
-HDL (Verilog/SystemVerilog), microarchitecture, timing analysis, and more. This
-resource is purely for educational and learning purposes. Some questions
-adapted from Harris \& Harris \cite{Harris2021}.
+HDL (Verilog/SystemVerilog), microarchitecture, timing analysis, and more.
+Interview rounds, especially for full-time positions at larger companies, may
+cover each or all of these topics, depending on the role. From my experience,
+expect earlier rounds to be a technical focus with verbal explanation and
+coding exercises, and more design whiteboarding and resume questions as the rounds go
+on.
+
+Disclaimer: Some questions adapted from Harris \& Harris \cite{Harris2021}.
+This resource is purely for educational and learning purposes. 
 
 %=============================
 % Preparation Insights
@@ -103,13 +110,13 @@ adapted from Harris \& Harris \cite{Harris2021}.
     circuit?
     \item What is a tristate buffer? How and why is it used?
     \item Are NAND gates universal? Why?
-    \item Design a circuit that determines whether a month has 31 days based on
-    a 4-bit input representing the month (1-12). Use a truth table and K-map.
     \item What is the boolean equation of a multiplexer?
     \item Explain the concept of fan-out in combinational circuits. How does it
     impact circuit design?
     \item What is the significance of propagation delay in combinational
     circuits? How can it be minimized?
+    \item Design a circuit that determines whether a month has 31 days based on
+    a 4-bit input representing the month (1-12). Use a truth table and K-map.
     \item Design a priority encoder for a 4-bit input. Explain its
     functionality.
 \end{enumerate}
@@ -211,6 +218,7 @@ adapted from Harris \& Harris \cite{Harris2021}.
 \begin{enumerate}
     \item What is the goal of a good testbench in RTL?
     \item What is the impact of delay statements on simulation vs.\ synthesis?
+    \item What is a time step in a simulation tool?
     \item What is the difference between inter-delay and intra-delay statements
     in Verilog?
     \item How do you write a testbench for a module that includes clock and
@@ -297,6 +305,7 @@ adapted from Harris \& Harris \cite{Harris2021}.
     \item What is timing closure? Have you used a static timing analysis tool?
     \item Describe how an FPGA functions, and specifically, what is a Look-Up
     Table (LUT)?
+    \item What is High-Level Synthesis (HLS)?
     \item What is a constraints file in the context of FPGA design?
     \item Walk through a typical ASIC design flow and project life cycle.
     \item What is the difference between DRC and LVS checks? Why are each important?
@@ -340,60 +349,29 @@ adapted from Harris \& Harris \cite{Harris2021}.
     encodings on an FPGA such as one-hot, binary, and gray code.
     \item What is a JTAG interface, and how is it used in hardware debugging?
     \item What are DACs and ADCs, and how are they applied in systems?
-    \item "What is the resolution of a DAC or ADC, and how does it relate to
+    \item What is the resolution of a DAC or ADC, and how does it relate to
     bit depth and voltage levels?
     \item What is SPI and what signals are needed to implement it?
     \item What is I2C and what signals are needed to implement it?
     \item What is UART and what signals are needed to implement it?
 \end{enumerate}
 
-%=============================
-% 9. \textit{“From Harris \& Harris Textbook”} (Optional Section)
-%=============================
-% \section{From Harris \& Harris, \emph{Computer Architecture \& Digital
-% Design} textbook} \noindent\textit{(These questions are adapted from end of
-% chapter "Interview Questions" of Harris \& Harris.) \cite{Harris2021}}
-
-% \begin{enumerate} \item \textbf{Combinational Logic} \begin{enumerate} \item
-%     Draw a two-input XOR gate using only NAND gates. What is the minimum
-%     number of gates required? \item Design a circuit that determines whether
-%     a month has 31 days based on a 4-bit input. \item What is a tristate
-%     buffer? Explain its function and typical use cases. \item Why are NAND
-%     gates considered universal? Justify your answer. \item Why can a
-%     circuit's contamination delay be shorter than its propagation delay?
-%     \end{enumerate} \item \textbf{Sequential Logic} \begin{enumerate} \item
-%     Create an FSM that detects the input sequence \texttt{1010}. \item What
-%     is the difference between a latch and a flip-flop? When should each be
-%     used? \item Design an FSM that functions as a 5-bit counter. \item
-%     Implement an edge detector that outputs HIGH on a rising edge (0 to 1).
-%     \item What is pipelining, and why is it useful in digital systems? \item
-%     Define negative hold time in the context of flip-flops. \end{enumerate}
-%     \item \textbf{Timing \& Metastability} \begin{enumerate} \item Explain
-%     timing constraints for logic between two registers. \item If a buffer is
-%     added to the clock input of the second flip-flop, how does that affect
-%     setup requirements? \item What is metastability, and how do synchronizers
-%     mitigate its effects? \end{enumerate} \item
-%     \textbf{Verilog/SystemVerilog} \begin{enumerate} \item What is the
-%     difference between blocking and non-blocking assignments? \item When
-%     should you use \texttt{always\_comb} vs.\
-%         \texttt{always\_ff}? \item How do you write a clean and efficient
-%         testbench in SystemVerilog? \item Compare \texttt{case} statements
-%         with \texttt{if-else} constructs. \item How do you define
-%         parameterized modules? \end{enumerate} \item
-%         \textbf{Microarchitecture \& FPGA Design} \begin{enumerate} \item
-%         What are pipeline hazards, and how can they be resolved? \item Why
-%         don't modern CPUs use extremely deep pipelines (e.g., 100 stages)?
-%         \item Compare cache organizations: direct-mapped, set-associative,
-%         fully-associative. \item What are the key differences in design
-%         approach between FPGAs and ASICs? \item Discuss trade-offs involved
-%         in implementing FSMs on an FPGA. \end{enumerate} \item
-%         \textbf{Miscellaneous Digital Design Topics} \begin{enumerate} \item
-%         Compare clock gating and power gating. When is each used? \item How
-%         does clock skew impact setup and hold timing? \item What is the
-%         difference between synchronous and asynchronous resets? \item How can
-%         multiplication be implemented efficiently in digital circuits? \item
-%         What is the maximum possible result from multiplying two \(N\)-bit
-%         numbers? \end{enumerate} \end{enumerate}
+\section{Recommended Resources \& Further Tips}
+\begin{itemize}
+    \item Download
+    \href{https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vivado.html}{Xilinx
+    Vivado} and practice writing and verifying designs. Get familiar with the
+    design flow from source creation to bitstream generation. Customize the
+    waveform views to ensure you understand the simulation. Understand the
+    outputs of the synthesis and implementation tools, and how to read the
+    timing reports. Bonus: Automate a project build using Tcl scripts in
+    Vivado.
+    \item Use online resources such as
+    \href{https://nandland.com/}{nandland.com},
+    \href{https://edaplayground.com/home}{EDA Playground}, and
+    \href{https://hdlbits.01xz.net/wiki/Main_Page}{HDLBits} to practice and
+    learn Verilog/SystemVerilog in a browser.
+\end{itemize}
 
 %=============================
 % 10. References
